@@ -95,8 +95,9 @@ class BaseParser(ABC):
         task_name = clean_name(self.template(task.get_name(), task_vars))
         edge_label = convert_when_to_str(task.when)
 
-        edge_node = EdgeNode(parent_node, TaskNode(task_name, generate_id(f"{node_type}_"), raw_object=task),
-                             edge_label)
+        edge_node = EdgeNode(source=parent_node, node_name=edge_label,
+                             destination=TaskNode(task_name, generate_id(f"{node_type}_"), raw_object=task,
+                                                  path=task.get_path()))
         parent_node.add_node(target_composition=f"{node_type}s", node=edge_node)
 
         return True

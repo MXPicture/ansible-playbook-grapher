@@ -28,7 +28,7 @@ class Node:
 
         :param node_name: The name of the node
         :param node_id: An identifier for this node
-        :param raw_object: The raw ansible object matching this node in the graph. Will be None if there is no match on 
+        :param raw_object: The raw ansible object matching this node in the graph. Will be None if there is no match on
         Ansible side
         """
         self.name = node_name
@@ -251,8 +251,17 @@ class TaskNode(Node):
     A task node. Can be pre_task, task or post_task
     """
 
-    def __init__(self, node_name: str, node_id: str = None, raw_object=None):
+    def __init__(self, node_name: str, node_id: str = None, raw_object=None, path: str = None):
+        """
+
+        :param node_name:
+        :param node_id:
+        :param raw_object:
+        :param path: The path on the filesystem where the task is located. It should be something like
+        ${absolute_path_to_the_file}:${task_line_number}
+        """
         super().__init__(node_name, node_id or generate_id("task_"), raw_object)
+        self.path = path
 
 
 class RoleNode(CompositeTasksNode):
