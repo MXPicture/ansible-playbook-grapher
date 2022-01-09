@@ -163,7 +163,7 @@ def test_include_role(request, include_role_tasks_option, expected_tasks_number)
 
 def test_with_block(request):
     """
-    Test with_roles.yml, an example with roles
+    Test with_block.yml, an example with roles
     """
     svg_path, playbook_path = run_grapher("with_block.yml", output_filename=request.node.name,
                                           additional_args=["--include-role-tasks"])

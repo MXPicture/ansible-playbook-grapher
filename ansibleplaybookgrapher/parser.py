@@ -184,7 +184,7 @@ class PlaybookParser(BaseParser):
                     # Go to the next role
                     continue
 
-                role_node = RoleNode(clean_name(role.get_name()))
+                role_node = RoleNode(clean_name(role.get_name()), raw_object=role, path=role._role_path)
                 # edge from play to role
                 play_node.add_node("roles", EdgeNode(play_node, role_node))
 
@@ -260,6 +260,7 @@ class PlaybookParser(BaseParser):
                     # See :func:`~ansible.playbook.included_file.IncludedFile.process_include_results` from line 155
                     self.display.v(f"An 'include_role' found. Including tasks from '{task_or_block.get_name()}'")
 
+                    # TODO: find a way to get the role path
                     role_node = RoleNode(task_or_block.get_name(), raw_object=task_or_block)
                     parent_nodes[-1].add_node(f"{node_type}s", EdgeNode(parent_nodes[-1], role_node,
                                                                         convert_when_to_str(task_or_block.when)))

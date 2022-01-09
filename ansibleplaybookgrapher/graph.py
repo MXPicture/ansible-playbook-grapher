@@ -269,8 +269,16 @@ class RoleNode(CompositeTasksNode):
     A role node. A role is a composition of tasks
     """
 
-    def __init__(self, node_name: str, node_id: str = None, raw_object=None):
+    def __init__(self, node_name: str, node_id: str = None, raw_object=None, path: str = None):
+        """
+
+        :param node_name:
+        :param node_id:
+        :param raw_object:
+        :param path: The absolute path on the filesystem where the role is located
+        """
         super().__init__(node_name, node_id or generate_id("role_"), raw_object=raw_object)
+        self.path = path
 
 
 def _get_all_tasks_nodes(composite: CompositeNode, task_acc: List[TaskNode]):
