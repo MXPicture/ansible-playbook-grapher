@@ -95,7 +95,8 @@ class BaseParser(ABC):
         task_name = clean_name(self.template(task.get_name(), task_vars))
         edge_label = convert_when_to_str(task.when)
 
-        edge_node = EdgeNode(parent_node, TaskNode(task_name, generate_id(f"{node_type}_"), raw_object=task),
+        edge_node = EdgeNode(parent_node,
+                             TaskNode(task_name, generate_id(f"{node_type}_"), raw_object=task, loop=task.loop),
                              edge_label)
         parent_node.add_node(target_composition=f"{node_type}s", node=edge_node)
 
@@ -259,7 +260,7 @@ class PlaybookParser(BaseParser):
                     # See :func:`~ansible.playbook.included_file.IncludedFile.process_include_results` from line 155
                     self.display.v(f"An 'include_role' found. Including tasks from '{task_or_block.get_name()}'")
 
-                    role_node = RoleNode(task_or_block.get_name(), raw_object=task_or_block)
+                    role_node = RoleNode(task_or_block.get_name(), raw_object=task_or_block, loop=task_or_block.loop)
                     parent_nodes[-1].add_node(f"{node_type}s", EdgeNode(parent_nodes[-1], role_node,
                                                                         convert_when_to_str(task_or_block.when)))
 

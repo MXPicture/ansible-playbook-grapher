@@ -99,7 +99,7 @@ class CompositeNode(Node):
         Recursively get the node links
         :return:
         """
-        for target, nodes in self._compositions.items():
+        for target, nodes in self.items():
             for node in nodes:
                 if isinstance(node, CompositeNode):
                     node._get_all_links(links)
@@ -251,8 +251,9 @@ class TaskNode(Node):
     A task node. Can be pre_task, task or post_task
     """
 
-    def __init__(self, node_name: str, node_id: str = None, raw_object=None):
+    def __init__(self, node_name: str, node_id: str = None, raw_object=None, loop: List[str] = None):
         super().__init__(node_name, node_id or generate_id("task_"), raw_object)
+        self.loop = loop or []
 
 
 class RoleNode(CompositeTasksNode):
@@ -260,8 +261,10 @@ class RoleNode(CompositeTasksNode):
     A role node. A role is a composition of tasks
     """
 
-    def __init__(self, node_name: str, node_id: str = None, raw_object=None):
+    def __init__(self, node_name: str, node_id: str = None, raw_object=None, loop: List[str] = None):
         super().__init__(node_name, node_id or generate_id("role_"), raw_object=raw_object)
+        self.loop = loop or []
+        self.loop = list(self.loop)  # Convert to classic list
 
 
 def _get_all_tasks_nodes(composite: CompositeNode, task_acc: List[TaskNode]):

@@ -115,7 +115,8 @@ class GraphvizRenderer:
         role_edge_label = f"{edge_counter} {edge.name}"
 
         with self.digraph.subgraph(name=role.name, node_attr={}) as role_subgraph:
-            role_subgraph.node(role.id, id=role.id, label=f"[role] {role.name}", tooltip=role.name, color=color)
+            role_subgraph.node(role.id, id=role.id, label=f"", tooltip=role.name, color=color,
+                               image="loop.svg")
             # from parent to role
             graph.edge(edge.source.id, role.id, label=role_edge_label, color=color, fontcolor=color, id=edge.id,
                        tooltip=role_edge_label, labeltooltip=role_edge_label)

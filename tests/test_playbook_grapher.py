@@ -155,7 +155,7 @@ def test_include_role(request, include_role_tasks_option, expected_tasks_number)
     Test include_role.yml, an example with include_role
     """
     svg_path, playbook_path = run_grapher("include_role.yml", output_filename=request.node.name,
-                                          additional_args=[include_role_tasks_option])
+                                          additional_args=["--save-dot-file", include_role_tasks_option])
 
     _common_tests(svg_path=svg_path, playbook_path=playbook_path, plays_number=1, tasks_number=expected_tasks_number,
                   roles_number=4)
